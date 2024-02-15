@@ -5,7 +5,7 @@ require('dotenv').config();
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const search_info_model = require('./model/topSearch'); // Rename the imported model
+const search_info_model = require('./model/topSearch'); 
 
 const app = express();
 const port = process.env.PORT;
@@ -25,21 +25,14 @@ try {
 
 async function updateOrCreatesearch_info(name) {
     try {
-        // Find the document with the given name
-        let searchInfo = await search_info_model.findOne({ name }); // Rename the variable
-
+        let searchInfo = await search_info_model.findOne({ name }); 
         if (searchInfo) {
-            // If the document exists, increment the count
             searchInfo.count += 1;
         } else {
-            // If the document doesn't exist, create a new one
             searchInfo = new search_info_model({ name, count: 1 });
         }
-
-        // Save the updated or new document
         await searchInfo.save();
         console.log(`Search info updated for ${name}`);
-
     } catch (error) {
         console.error('Error updating search info:', error);
     }
@@ -51,20 +44,16 @@ app.get('/', async (req, res) => {
           .find()
           .sort({ count: -1 })
           .limit(10);
-    
-          console.log(searchInfoList, "pls")
+        console.log(searchInfoList, "pls")
         res.json(searchInfoList)
-        
       } catch (err) {
         console.error("Error fetching search info:", err);
         res.status(500).json({ message: "Internal server error" });
       }
-
-    
 })
 
 app.get('/search/:query', async (req, res) => {
-    const query = req.params.query || 'lion'; // Default value if query parameter is not provided
+    const query = req.params.query || 'lion';
     const unsplash = createApi({
         accessKey: process.env.UNSPLASH_ACCESS_KEY,
         fetch: nodeFetch.default,
