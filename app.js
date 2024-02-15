@@ -9,7 +9,7 @@ const search_info_model = require('./model/topSearch'); // Rename the imported m
 
 const app = express();
 const port = process.env.PORT;
-const DBurl = process.env.DBurl;
+const DBurl = process.env.DBURL;
 
 
 
